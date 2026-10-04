@@ -4,13 +4,13 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "reac
 type Variant = "primary" | "outline" | "ghost";
 
 const baseClasses =
-  "inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 font-body text-sm font-medium transition-[transform,box-shadow,background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-body text-sm font-semibold transition-[transform,box-shadow,background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50";
 
 const variantClasses: Record<Variant, string> = {
   primary:
     "bg-gradient-to-r from-accent-blue via-accent-violet to-accent-turquoise text-white shadow-soft hover:-translate-y-0.5 hover:shadow-soft-lg",
   outline:
-    "border border-ink/15 text-ink hover:border-accent-blue/50 hover:bg-surface",
+    "border border-ink/15 bg-white text-ink hover:border-accent-blue/50 hover:bg-surface",
   ghost: "text-ink/80 hover:bg-surface hover:text-ink",
 };
 
