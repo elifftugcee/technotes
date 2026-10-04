@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { ArticleCard, type ArticleCardProps } from "@/components/ui/ArticleCard";
 import { Button } from "@/components/ui/Button";
-import { CornerFrame } from "@/components/ui/CornerFrame";
-import { NodePattern } from "@/components/ui/NodePattern";
 import { CategoryCard } from "@/components/ui/CategoryCard";
 import { GradientBlobs } from "@/components/effects/GradientBlobs";
+import { HeroVisual } from "@/components/effects/HeroVisual";
 import { BoltIcon, StepsIcon, RefreshIcon, CompassIcon } from "@/components/ui/icons";
 import { categories } from "@/content/categories";
 
@@ -85,19 +84,7 @@ export default function Home() {
             </dl>
           </div>
 
-          <div className="relative mx-auto hidden aspect-square w-full max-w-md lg:block">
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-accent-blue/15 via-accent-violet/15 to-accent-turquoise/15" />
-            <div className="absolute inset-0 rounded-3xl border border-white bg-white/50 backdrop-blur-sm" />
-            <CornerFrame />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <NodePattern className="h-2/3 w-2/3 opacity-80" />
-            </div>
-            <span className="absolute -left-5 top-10 h-16 w-16 rounded-2xl bg-gradient-to-br from-accent-blue to-accent-violet shadow-soft-lg" />
-            <span className="absolute -right-6 bottom-20 h-14 w-14 rounded-2xl bg-gradient-to-br from-accent-violet to-accent-turquoise shadow-soft-lg" />
-            <span className="absolute bottom-8 left-10 inline-flex items-center rounded-full border border-white/70 bg-white/70 px-3 py-1 font-mono text-[0.6875rem] text-muted backdrop-blur-sm">
-              Görsel yakında
-            </span>
-          </div>
+          <HeroVisual />
         </div>
       </section>
 
