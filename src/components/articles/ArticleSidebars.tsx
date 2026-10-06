@@ -96,8 +96,8 @@ function RelatedPosts({ posts }: { posts: PostSummary[] }) {
       <ul className="mt-4 space-y-4">
         {posts.map((post) => (
           <li key={post.slug} className="group relative flex gap-3">
-            <div className="relative h-[3.25rem] w-[5.5rem] shrink-0 overflow-hidden rounded-lg">
-              <PostCover post={post} sizes="88px" />
+            <div className="relative aspect-cover w-24 shrink-0 overflow-hidden rounded-lg">
+              <PostCover post={post} sizes="96px" />
             </div>
             <div className="min-w-0 flex-1">
               <h3 className="text-[0.8125rem] font-bold leading-snug text-ink">

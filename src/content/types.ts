@@ -1,16 +1,3 @@
-/** Illustrated cover variants available in `components/art/covers`. */
-export const coverKeys = [
-  "claude-code",
-  "prompt",
-  "yolo",
-  "iou-nms",
-  "journey",
-  "tech-stack",
-  "claude-project",
-  "prompt-templates",
-] as const;
-export type CoverKey = (typeof coverKeys)[number];
-
 export type PostFrontmatter = {
   title: string;
   /** ISO date (YYYY-MM-DD) */
@@ -20,10 +7,17 @@ export type PostFrontmatter = {
   excerpt: string;
   /** Reading time in minutes */
   readingTime: number;
-  /** Built-in illustrated cover */
-  cover: CoverKey;
-  /** Optional real image under /public — takes precedence over `cover` */
-  coverImage?: string;
+  /**
+   * The post's single cover image, a path under /public (e.g. "/images/posts/<slug>.webp").
+   * Every surface — home cards, the featured card, the articles list, related posts and the
+   * article banner — renders this one value through `PostCover`.
+   */
+  coverImage: string;
+  /**
+   * Optional CSS `object-position` for the cover ("50% 50%" by default), as "x%" or "x% y%".
+   * Use it to keep a picture's important area in frame when a surface crops it.
+   */
+  coverPosition?: string;
   featured?: boolean;
   /** Topics shown under "İlgili Konular"; falls back to the category name */
   tags?: string[];

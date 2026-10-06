@@ -14,7 +14,7 @@ export const siteImages = {
   /** Alternative home hero, kept for a later side-by-side comparison. Not used on any page yet. */
   homeHeroAlternative: { src: "/images/home-hero-alternative.webp", width: 1672, height: 941 },
 
-  /** Default banner of every article page (a post's own `coverImage` takes precedence). */
+  /** No longer shown: article banners now show each post's own `coverImage`. Kept in case a generic banner is wanted again. */
   articleDetailHero: { src: "/images/article-detail-hero.webp", width: 1942, height: 809 },
 
   /** Top background of the About page. */

@@ -10,7 +10,7 @@ import { PostCover } from "./PostCover";
 export function ArticleRow({ post }: { post: PostSummary }) {
   return (
     <article className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-card-lg sm:flex-row">
-      <div className="relative aspect-[2.2/1] shrink-0 overflow-hidden sm:aspect-auto sm:w-64 lg:w-72">
+      <div className="relative aspect-cover shrink-0 overflow-hidden sm:aspect-auto sm:w-64 lg:w-72">
         <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
           <PostCover post={post} sizes="(min-width: 1024px) 288px, (min-width: 640px) 256px, 92vw" />
         </div>

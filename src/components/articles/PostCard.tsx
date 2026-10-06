@@ -8,7 +8,7 @@ import { PostMeta } from "./PostMeta";
 export function PostCard({ post }: { post: PostSummary }) {
   return (
     <article className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-card-lg">
-      <div className="relative aspect-[1.85/1] overflow-hidden">
+      <div className="relative aspect-cover overflow-hidden">
         <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
           <PostCover post={post} sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw" />
         </div>

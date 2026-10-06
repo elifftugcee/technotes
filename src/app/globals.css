@@ -65,6 +65,9 @@
   --shadow-card-lg: 0 2px 4px rgb(15 23 80 / 0.06), 0 22px 40px -14px rgb(30 60 160 / 0.32);
   --shadow-brand: 0 10px 24px -8px rgb(10 108 255 / 0.55);
 
+  /* Cover ratio shared by every post card (`aspect-cover`) */
+  --aspect-cover: 2 / 1;
+
   --animate-scene-float: scene-float 7s ease-in-out infinite;
   --animate-scene-glow: scene-glow 4s ease-in-out infinite;
   --animate-twinkle: twinkle 4.5s ease-in-out infinite;

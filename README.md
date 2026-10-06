@@ -42,12 +42,24 @@ date: "2024-03-12"          # YYYY-MM-DD
 category: "claude-code"     # content/categories.ts içindeki slug
 excerpt: "Kısa özet"
 readingTime: 8              # dakika
-cover: "claude-code"        # hazır illüstrasyon: claude-code | prompt | yolo | iou-nms | journey | tech-stack | claude-project | prompt-templates
-coverImage: "/images/posts/ornek.webp"   # opsiyonel — gerçek görsel, `cover`ın yerine geçer
+coverImage: "/images/posts/yazi-slug.webp"   # zorunlu — yazının tek kapak görseli
+coverPosition: "50% 40%"                       # opsiyonel — kadraj (object-position), varsayılan "50% 50%"
 featured: true              # opsiyonel — "Öne Çıkan Yazı" döngüsüne girer
 tags: ["Claude Code", "AI Tools"]       # opsiyonel — "İlgili Konular"; yoksa kategori adı gösterilir
 ---
 ```
+
+## Yazı kapak görselleri
+
+Her yazının **tek** kapağı frontmatter'daki `coverImage` alanıdır (dosya `public/images/posts/<slug>.webp`; yoksa
+build hata verir). Ana sayfadaki kartlar ve Öne Çıkan Yazı, Yazılar sayfası (kart ve liste), Benzer Yazılar ve yazı
+detayındaki banner aynı değeri `components/articles/PostCover.tsx` üzerinden gösterir; başka hiçbir yerde görsel yolu
+yazılmaz. Tüm kartlarda oran 2:1'dir (`aspect-cover`, `globals.css`'te tek yerde tanımlı); bir görselin önemli kısmı
+kırpılıyorsa o yazıya `coverPosition: "x% y%"` ekleyin.
+
+Detay banner'ı: `xl` (≥1280 px) ve üstünde solda metin paneli, sağda görsel; daha dar ekranlarda görsel üstte, metin altta.
+Görselin üstünde metin veya renk katmanı yoktur. Eski kodla çizilmiş SVG kapaklar (`components/art/covers`) artık kullanılmıyor,
+silinmeden duruyor.
 
 ## Sayfa görselleri
 
@@ -58,7 +70,7 @@ boyutlandırma/format dönüşümünü Next.js yapar). Dosyayı aynı adla deği
 | --- | --- |
 | `home-hero.webp` | Ana sayfa hero arka planı (`components/home/HeroBackdrop.tsx`) |
 | `home-hero-alternative.webp` | Henüz hiçbir sayfada kullanılmıyor — ana sayfa için alternatif |
-| `article-detail-hero.webp` | Yazı detay sayfasının banner'ı (`components/articles/ArticleBanner.tsx`); yazının frontmatter'ında `coverImage` varsa o kullanılır |
+| `article-detail-hero.webp` | Artık hiçbir yerde gösterilmiyor (banner her yazının kendi kapağını gösterir); saklanıyor |
 | `about-hero.webp` | Hakkımda sayfasının üst arka planı (`components/about/AboutHero.tsx`) |
 | `newsletter-background.webp` | Ana sayfadaki bülten bandı (`components/home/Newsletter.tsx`) |
 

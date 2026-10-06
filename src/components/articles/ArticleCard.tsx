@@ -23,7 +23,7 @@ export function ArticleCard({ post }: { post: PostSummary }) {
   return (
     <article className="group relative flex w-full flex-col rounded-2xl border border-line bg-surface shadow-card transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-card-lg">
       <div className="relative">
-        <div className="relative aspect-[2.2/1] overflow-hidden rounded-t-2xl">
+        <div className="relative aspect-cover overflow-hidden rounded-t-2xl">
           <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
             <PostCover post={post} sizes="(min-width: 1280px) 24vw, (min-width: 640px) 45vw, 92vw" />
           </div>
