@@ -1,8 +1,9 @@
+import Image from "next/image";
 import type { ComponentType } from "react";
-import { NewsletterScene } from "@/components/art/NewsletterScene";
 import { Container } from "@/components/ui/Container";
 import { LockIcon, MailIcon, UsersIcon, type IconProps } from "@/components/ui/icons";
 import { homeContent } from "@/content/home";
+import { siteImages } from "@/content/images";
 import { cn } from "@/lib/cn";
 import { NewsletterForm } from "./NewsletterForm";
 
@@ -20,10 +21,17 @@ export function Newsletter() {
 
   return (
     <section id="abone" aria-labelledby="abone-baslik" className="relative isolate overflow-hidden bg-[#0b1040] text-white">
-      <NewsletterScene className="absolute inset-0 -z-20 h-full w-full" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#070b36]/85 via-[#070b36]/35 to-[#070b36]/60" />
+      <Image
+        src={siteImages.newsletterBackground.src}
+        alt=""
+        fill
+        sizes="100vw"
+        className="-z-20 object-cover object-[50%_55%]"
+      />
+      {/* Veil: keeps the form and benefits readable while the night colours stay visible in the middle */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#070b36]/90 via-[#070b36]/40 to-[#070b36]/75 max-lg:bg-[#070b36]/50 max-lg:bg-none" />
 
-      <Container size="wide" className="grid items-center gap-8 py-8 lg:grid-cols-[minmax(0,27rem)_1fr] lg:gap-12">
+      <Container size="wide" className="grid items-center gap-8 py-9 lg:min-h-[15rem] lg:grid-cols-[minmax(0,27rem)_1fr] lg:gap-12">
         <div>
           <h2 id="abone-baslik" className="text-[1.45rem] font-extrabold tracking-tight">
             {title}

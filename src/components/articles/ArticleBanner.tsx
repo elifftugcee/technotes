@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { CoverArt } from "@/components/art/CoverArt";
 import { Button } from "@/components/ui/Button";
 import { ArrowRightIcon } from "@/components/ui/icons";
+import { siteImages } from "@/content/images";
 import { site } from "@/content/site";
 import type { PostSummary } from "@/content/types";
 import { CategoryBadge } from "./CategoryBadge";
@@ -9,22 +9,28 @@ import { PostMeta } from "./PostMeta";
 import { ShareButtons } from "./ShareButtons";
 
 /**
- * Article header: cover art on the right fading into a deep-blue panel, title and meta on the left.
- * A real `coverImage` (frontmatter) fills the whole banner instead of the illustration.
+ * Article header: the workspace photo fills the banner, a deep-blue veil keeps the title, category and meta
+ * readable on the left, and the AI workspace stays clear on the right. A post's own `coverImage`
+ * (frontmatter) replaces the default photo.
  */
 export function ArticleBanner({ post }: { post: PostSummary }) {
   return (
     <header className="relative isolate overflow-hidden rounded-3xl bg-[#07103a] text-white shadow-card-lg">
-      {post.coverImage ? (
-        <Image src={post.coverImage} alt="" fill priority sizes="(min-width: 1536px) 1420px, 100vw" className="-z-20 object-cover" />
-      ) : (
-        <div className="absolute inset-y-0 right-0 -z-20 w-full sm:w-[64%] sm:[mask-image:linear-gradient(to_right,transparent_0,#000_38%)]">
-          <CoverArt cover={post.cover} />
-        </div>
-      )}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#07103a] via-[#07103a]/75 to-transparent sm:via-[#07103a]/55" />
+      {/* Photo: a strip above the text on phones, the full banner background from sm up */}
+      <div className="relative h-44 sm:absolute sm:inset-0 sm:-z-20 sm:h-auto">
+        <Image
+          src={post.coverImage ?? siteImages.articleDetailHero.src}
+          alt=""
+          fill
+          preload
+          sizes="(min-width: 1536px) 1420px, 100vw"
+          className="object-cover object-[86%_50%] sm:object-[62%_70%]"
+        />
+        {/* Veil: fades the strip into the text panel on phones; keeps the left-hand text readable from sm up */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#07103a] via-[#07103a]/10 to-transparent sm:bg-gradient-to-r sm:from-[#07103a]/85 sm:via-[#07103a]/48 sm:to-transparent" />
+      </div>
 
-      <div className="flex min-h-[18rem] max-w-[44rem] flex-col justify-end gap-3 p-6 sm:min-h-[19rem] sm:p-9">
+      <div className="relative flex max-w-[44rem] flex-col justify-end gap-3 p-6 pt-3 sm:min-h-[22rem] sm:max-w-[30rem] sm:p-9 md:max-w-[34rem] lg:min-h-[24rem] lg:max-w-[44rem]">
         <CategoryBadge slug={post.category} variant="onDark" />
         <h1 className="text-[clamp(1.75rem,3.2vw,2.75rem)] font-extrabold leading-[1.08] tracking-[-0.03em]">{post.title}</h1>
         <p className="max-w-[36rem] text-[0.9375rem] leading-relaxed text-white/85">{post.excerpt}</p>

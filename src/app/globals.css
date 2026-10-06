@@ -159,6 +159,69 @@
   }
 }
 
+/* Ambient motion for the hero's decorative AI/CV composition — calm, slow, transform/opacity only */
+@keyframes hero-blob-drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(16px, -12px) scale(1.08);
+  }
+}
+
+@keyframes hero-blob-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-14px, 10px) scale(1.05);
+  }
+}
+
+@keyframes hero-node-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes hero-line-breathe {
+  0%,
+  100% {
+    opacity: 0.18;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes hero-chip-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes hero-panel-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
 /* Respect the OS-level request to reduce motion across every component */
 @media (prefers-reduced-motion: reduce) {
   *,

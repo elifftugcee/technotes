@@ -19,7 +19,8 @@ src/
     layout/            Header, Footer, Logo, SearchBox (⌘K / Ctrl K), ThemeToggle
     home/              Ana sayfa bölümleri: Hero, CategoryStrip, FeaturedCarousel, PostsShowcase, Newsletter
     articles/          Yazılar sayfası: ArticlesProvider (filtre durumu), ArticleCard/ArticleRow, FilterSidebar, Pagination…
-    art/               SVG illüstrasyonlar: hero sahnesi, kapak görselleri, bülten arka planı
+    art/               SVG illüstrasyonlar: yazı kapakları ve (şu an kullanılmayan) eski hero/bülten sahneleri
+    effects/           HeroVisual — CSS animasyonlu hero kompozisyonu (kullanılmıyor; fotoğrafın üzerine animasyon katmanları için saklanıyor)
     mdx/               MDX gövdesi için tipografi
     ui/                Button, Badge, Container, SectionHeading, ikonlar
   content/
@@ -47,6 +48,21 @@ featured: true              # opsiyonel — "Öne Çıkan Yazı" döngüsüne gi
 tags: ["Claude Code", "AI Tools"]       # opsiyonel — "İlgili Konular"; yoksa kategori adı gösterilir
 ---
 ```
+
+## Sayfa görselleri
+
+Fotoğraflar `public/images/` altındadır ve `src/content/images.ts` içinden adlandırılır (`next/image` ile sunulur,
+boyutlandırma/format dönüşümünü Next.js yapar). Dosyayı aynı adla değiştirmek yeterlidir.
+
+| Dosya | Nerede |
+| --- | --- |
+| `home-hero.webp` | Ana sayfa hero arka planı (`components/home/HeroBackdrop.tsx`) |
+| `home-hero-alternative.webp` | Henüz hiçbir sayfada kullanılmıyor — ana sayfa için alternatif |
+| `article-detail-hero.webp` | Yazı detay sayfasının banner'ı (`components/articles/ArticleBanner.tsx`); yazının frontmatter'ında `coverImage` varsa o kullanılır |
+| `about-hero.webp` | Hakkımda sayfasının üst arka planı (`components/about/AboutHero.tsx`) |
+| `newsletter-background.webp` | Ana sayfadaki bülten bandı (`components/home/Newsletter.tsx`) |
+
+Yazılar sayfasında bu görsellerin hiçbiri kullanılmaz.
 
 ## Hakkımda sayfası
 
