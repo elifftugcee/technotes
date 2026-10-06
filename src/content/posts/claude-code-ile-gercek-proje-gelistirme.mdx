@@ -1,0 +1,46 @@
+---
+title: "Claude Code ile Gerçek Proje Geliştirme"
+date: "2024-02-25"
+category: "claude-code"
+excerpt: "Claude Code kullanarak sıfırdan bir uygulama geliştirme sürecini planlamadan teste kadar adım adım anlatıyorum."
+readingTime: 10
+cover: "claude-project"
+---
+
+Claude Code'u küçük denemelerin ötesinde gerçek bir projede kullanmak için bir iş akışına ihtiyaç var. Aşağıdaki sıra, projeyi kontrol altında tutarak hızlanmanın bir yolu.
+
+## 1. Önce planla
+
+Kod yazdırmadan önce hedefi ve kapsamı birkaç cümleyle yaz. İstersen Claude Code'dan önce bir plan taslağı çıkarmasını iste ve planı sen onayla.
+
+```text
+Bu projede bir görev listesi uygulaması yapmak istiyorum.
+Henüz kod yazma; önce dosya yapısını ve adımları öner.
+```
+
+## 2. Proje kurallarını `CLAUDE.md` içine yaz
+
+Kullandığın teknolojiler, kod stili ve çalıştırılacak komutlar bu dosyada durursa her oturumda tekrar anlatman gerekmez.
+
+```markdown
+# Proje notları
+- Next.js + TypeScript kullanıyoruz
+- Test için: npm test
+- Yeni bileşenler src/components altına eklenir
+```
+
+## 3. Küçük görevlerle ilerle
+
+Her adım tek bir sonucu hedeflesin: "Görev ekleme formunu yap", sonra "Görevleri listele", sonra "Silme ekle". Böylece her değişikliği rahatça inceleyebilirsin.
+
+## 4. Test et
+
+Her adımdan sonra testleri ve uygulamayı çalıştır. Hata varsa çıktıyı Claude Code'a göster ve düzeltmesini iste.
+
+## 5. Gözden geçir ve kaydet
+
+Değişikliklerin farkını (diff) oku, anlamadığın yeri sor. Her anlamlı adımda bir commit atmak geri dönmeyi kolaylaştırır.
+
+## Özet
+
+Plan, kurallar, küçük adımlar, test ve inceleme: Build, Test, Iterate döngüsünü kısa tutmak gerçek projelerde en çok işe yarayan alışkanlık.

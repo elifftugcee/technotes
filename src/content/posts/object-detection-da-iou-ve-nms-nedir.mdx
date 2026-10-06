@@ -1,0 +1,53 @@
+---
+title: "Object Detection'da IoU ve NMS Nedir?"
+date: "2024-03-05"
+category: "ai-computer-vision"
+excerpt: "Nesne tespitinde kutuları karşılaştırmanın ve gereksiz tahminleri elemenin iki temel aracı: IoU ve Non-Maximum Suppression."
+readingTime: 8
+cover: "iou-nms"
+---
+
+Nesne tespiti modelleri bir nesne için çoğu zaman birden fazla kutu üretir. Hangi kutunun doğru olduğunu anlamak ve fazlalıkları atmak için iki araca ihtiyaç var: **IoU** ve **NMS**.
+
+## IoU (Intersection over Union)
+
+IoU, iki kutunun kesişim alanının birleşim alanına oranıdır:
+
+```text
+IoU = Kesişim Alanı / Birleşim Alanı
+```
+
+Değer 0 ile 1 arasındadır. 0 hiç örtüşme yok, 1 kutular birebir aynı demektir.
+
+Küçük bir örnek: İki kutunun alanı 100'er birim ve kesişimleri 50 birim olsun. Birleşim 100 + 100 − 50 = 150 olur; IoU = 50 / 150 ≈ 0,33.
+
+```python
+def iou(a, b):
+    """Kutular (x1, y1, x2, y2) biçiminde."""
+    x1, y1 = max(a[0], b[0]), max(a[1], b[1])
+    x2, y2 = min(a[2], b[2]), min(a[3], b[3])
+
+    kesisim = max(0, x2 - x1) * max(0, y2 - y1)
+    alan_a = (a[2] - a[0]) * (a[3] - a[1])
+    alan_b = (b[2] - b[0]) * (b[3] - b[1])
+
+    return kesisim / (alan_a + alan_b - kesisim)
+```
+
+IoU iki yerde kullanılır: tahminin gerçek kutuyla ne kadar örtüştüğünü ölçerken (değerlendirme) ve birbirine çok benzeyen tahminleri bulurken (NMS).
+
+## NMS (Non-Maximum Suppression)
+
+NMS, aynı nesneye ait üst üste binen kutulardan yalnızca en güvenilir olanı bırakır:
+
+1. Kutuları güven skoruna göre büyükten küçüğe sırala.
+2. En yüksek skorlu kutuyu seç ve sonuç listesine ekle.
+3. Kalan kutulardan, seçilenle IoU'su belirlenen eşikten (ör. 0,5) büyük olanları ele.
+4. Kutu kalmayana kadar 2. ve 3. adımları tekrarla.
+
+## Eşik seçimi
+
+- **Düşük eşik** daha agresif eler; birbirine yakın gerçek nesneler de silinebilir.
+- **Yüksek eşik** daha toleranslıdır; aynı nesne için tekrarlayan kutular kalabilir.
+
+Doğru değer, verinin ne kadar kalabalık olduğuna bağlıdır; doğrulama kümesinde denemek en güvenli yoldur.

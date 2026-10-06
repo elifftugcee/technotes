@@ -1,0 +1,37 @@
+---
+title: "Modern Bir AI Projesi İçin Teknoloji Seçimi"
+date: "2024-02-28"
+category: "software-development"
+excerpt: "AI projelerinde kullanılan teknoloji stack'ini ve her katmanda yapılan tercihlerin nedenlerini örnek bir mimari üzerinden anlatıyorum."
+readingTime: 9
+cover: "tech-stack"
+---
+
+Bir yapay zeka projesinde "en iyi teknoloji" diye bir şey yok; ekibine, verine ve ürününe en uygun olan var. Bu yazıda örnek bir stack üzerinden karar verirken sorulacak soruları topluyorum.
+
+## Karar verirken sorulacak sorular
+
+- **Ekip neyi biliyor?** Bilinen bir araç, yeni ve parlak bir araçtan çoğu zaman daha hızlı sonuç verir.
+- **Ekosistem ne kadar olgun?** Dokümantasyon, topluluk ve hazır kütüphaneler zaman kazandırır.
+- **Nasıl yayına alınacak?** Model sunucuda mı, uç cihazda mı çalışacak?
+- **Bakımı kim yapacak?** Altı ay sonra projeyi açan biri ne kadar zorlanır?
+
+## Örnek bir stack
+
+- **Model:** PyTorch, Ultralytics. Geniş topluluk ve hazır önceden eğitilmiş modeller.
+- **API:** FastAPI. Hızlı geliştirme ve otomatik dokümantasyon.
+- **Arayüz:** Next.js. Tek kod tabanında hem sayfa hem API yönlendirme.
+- **Paketleme:** Docker. Her ortamda aynı şekilde çalışır.
+
+## Küçük başla, sonra genişlet
+
+İlk sürümde tek bir servis ve basit bir arayüz çoğu zaman yeterlidir. Ölçek ve karmaşıklık gerçekten ihtiyaç doğurduğunda parçaları ayırmak, baştan mikroservis kurmaktan çok daha ucuzdur.
+
+## Kendi stack'ini seçerken
+
+1. İhtiyaçlarını ve kısıtlarını yaz.
+2. Her katman için iki üç aday belirle.
+3. Küçük bir prototiple dene.
+4. Kararını ve nedenini kısa bir notla kaydet.
+
+Kararların nedenini yazmak, ileride aynı soruyla karşılaştığında en değerli not olur.

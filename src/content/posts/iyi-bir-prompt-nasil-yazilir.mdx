@@ -1,0 +1,51 @@
+---
+title: "İyi Bir Prompt Nasıl Yazılır?"
+date: "2024-03-10"
+category: "prompt-engineering"
+excerpt: "Daha net, daha tutarlı ve daha faydalı cevaplar almak için prompt yazarken uygulayabileceğin altı pratik teknik."
+readingTime: 6
+cover: "prompt"
+featured: true
+---
+
+Aynı modele sorduğun iki farklı cümle, birbirinden çok farklı cevaplar üretebilir. İyi bir prompt sihirli bir formül değil; modelin işini kolaylaştıran net bir brief'tir.
+
+## 1. Hedefi açıkça söyle
+
+"Bu metni düzelt" yerine ne istediğini belirt:
+
+> Aşağıdaki e-postayı daha kısa ve nazik bir tonda yeniden yaz. Anlamı değiştirme.
+
+## 2. Bağlam ver
+
+Model senin projeni, okuyucunu ya da kısıtlarını bilmez. Kim için yazdığını, hangi araçları kullandığını ve neyin önemli olduğunu kısaca anlat.
+
+## 3. Çıktı biçimini tarif et
+
+Liste mi, tablo mu, JSON mu? Uzunluk ne olsun? Biçimi baştan söylemek sonradan düzeltme turlarını azaltır.
+
+```text
+Cevabı şu biçimde ver:
+- Özet (en fazla 2 cümle)
+- Riskler (madde madde)
+- Önerilen sonraki adım
+```
+
+## 4. Örnek göster
+
+İstediğin tarzı bir iki örnekle göstermek (few-shot), uzun açıklamalardan çoğu zaman daha etkilidir.
+
+## 5. Büyük işi adımlara böl
+
+Karmaşık bir görevi tek seferde istemek yerine adımlara ayır: önce planı iste, sonra planın her adımını ayrı ayrı yaptır.
+
+## 6. Dene, ölç, tekrar et
+
+İlk prompt nadiren en iyisidir. Çıktıdaki eksikliğe bakıp prompt'u küçük adımlarla iyileştir ve neyin işe yaradığını not et.
+
+## Kısa kontrol listesi
+
+- Hedef net mi?
+- Gerekli bağlam var mı?
+- Çıktı biçimi tarif edildi mi?
+- Gerekirse örnek eklendi mi?

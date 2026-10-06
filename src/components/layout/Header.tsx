@@ -1,37 +1,61 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useSyncExternalStore } from "react";
+import { Button } from "@/components/ui/Button";
+import { ArrowRightIcon, CloseIcon, MenuIcon } from "@/components/ui/icons";
+import { site } from "@/content/site";
+import { cn } from "@/lib/cn";
+import type { SearchEntry } from "@/lib/search";
 import { Logo } from "./Logo";
-import { GithubIcon, MenuIcon, CloseIcon, SearchIcon } from "@/components/ui/icons";
+import { SearchBox } from "./SearchBox";
+import { ThemeToggle } from "./ThemeToggle";
 
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/articles", label: "Articles" },
-  { href: "/about", label: "About" },
-];
+const subscribeToScroll = (onChange: () => void) => {
+  window.addEventListener("scroll", onChange, { passive: true });
+  return () => window.removeEventListener("scroll", onChange);
+};
+const getScrolled = () => window.scrollY > 8;
+const getServerScrolled = () => false;
 
-export function Header() {
+function isActive(pathname: string, href: string): boolean {
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function Header({ searchEntries }: { searchEntries: SearchEntry[] }) {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const scrolled = useSyncExternalStore(subscribeToScroll, getScrolled, getServerScrolled);
+
+  // The menu is "open for" a pathname, so it closes by itself whenever the route changes.
+  const [menuPath, setMenuPath] = useState<string | null>(null);
+  const menuOpen = menuPath === pathname;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink/8 bg-white/90 shadow-[0_1px_0_rgba(16,21,43,0.04)] backdrop-blur-sm">
-      <div className="mx-auto flex max-w-[80rem] items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+    <header
+      className={cn(
+        "sticky top-0 z-50 h-14 transition-[background-color,box-shadow,backdrop-filter] duration-300",
+        scrolled || menuOpen
+          ? "border-b border-line bg-glass shadow-[0_1px_0_rgb(0_0_0/0.02)] backdrop-blur-xl"
+          : "border-b border-transparent",
+      )}
+    >
+      <div className="mx-auto flex h-full w-full max-w-[1368px] items-center gap-6 px-5 sm:px-6 lg:gap-10">
         <Logo />
 
-        <nav aria-label="Ana menü" className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
+        <nav aria-label="Ana menü" className="hidden h-full items-stretch gap-1 lg:flex">
+          {site.nav.map((item) => {
+            const active = isActive(pathname, item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                aria-current={isActive ? "page" : undefined}
-                className={`rounded-full px-4 py-2 font-body text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
-                  isActive ? "bg-surface text-ink" : "text-muted hover:bg-surface hover:text-ink"
-                }`}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "relative inline-flex items-center px-3 text-sm font-medium transition-colors",
+                  "after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:rounded-full after:bg-brand after:transition-opacity",
+                  active ? "text-brand after:opacity-100" : "text-ink/80 after:opacity-0 hover:text-brand",
+                )}
               >
                 {item.label}
               </Link>
@@ -39,64 +63,57 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Link
-            href="/articles"
-            aria-label="Yazılarda ara"
-            className="hidden h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:bg-surface hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:inline-flex"
-          >
-            <SearchIcon className="h-4 w-4" />
-          </Link>
+        <div className="ml-auto hidden items-center gap-3 lg:flex">
+          <SearchBox entries={searchEntries} enableShortcut className="w-56 xl:w-72" />
+          <ThemeToggle />
+          <Button href={site.social.github} variant="soft" className="h-11">
+            Takip Et <ArrowRightIcon className="h-4 w-4" />
+          </Button>
+        </div>
 
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden items-center gap-2 rounded-full border border-ink/15 px-4 py-2 font-body text-sm font-medium text-ink transition-colors hover:border-accent-blue/50 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:inline-flex"
-          >
-            <GithubIcon className="h-4 w-4" />
-            GitHub
-          </a>
-
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-white md:hidden"
-            aria-expanded={open}
+            aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
-            onClick={() => setOpen((value) => !value)}
+            aria-label={menuOpen ? "Menüyü kapat" : "Menüyü aç"}
+            onClick={() => setMenuPath(menuOpen ? null : pathname)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-ink"
           >
-            {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+            {menuOpen ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {open && (
-        <nav id="mobile-menu" aria-label="Mobil menü" className="border-t border-ink/8 bg-white px-4 py-3 md:hidden">
-          <ul className="flex flex-col gap-1">
-            {navItems.map((item) => (
-              <li key={item.href}>
+      {menuOpen && (
+        <div
+          id="mobile-menu"
+          className="absolute inset-x-0 top-full max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-b border-line bg-canvas/95 px-5 pb-6 pt-3 shadow-card-lg backdrop-blur-xl lg:hidden"
+        >
+          <SearchBox entries={searchEntries} onNavigate={() => setMenuPath(null)} />
+          <nav aria-label="Mobil menü" className="mt-3 flex flex-col">
+            {site.nav.map((item) => {
+              const active = isActive(pathname, item.href);
+              return (
                 <Link
+                  key={item.href}
                   href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-full px-4 py-2.5 font-body text-base text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "rounded-xl px-3 py-3 text-base font-medium",
+                    active ? "bg-brand/10 text-brand" : "text-ink hover:bg-surface-2",
+                  )}
                 >
                   {item.label}
                 </Link>
-              </li>
-            ))}
-            <li>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full px-4 py-2.5 font-body text-base text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
-              >
-                <GithubIcon className="h-4 w-4" /> GitHub
-              </a>
-            </li>
-          </ul>
-        </nav>
+              );
+            })}
+          </nav>
+          <Button href={site.social.github} variant="primary" className="mt-3 w-full">
+            Takip Et <ArrowRightIcon className="h-4 w-4" />
+          </Button>
+        </div>
       )}
     </header>
   );

@@ -1,0 +1,62 @@
+---
+title: "Prompt Şablonları ve Örnekler"
+date: "2024-02-20"
+category: "prompt-engineering"
+excerpt: "Farklı senaryolar için uyarlayabileceğin hazır prompt şablonlarını ve pratik örnekleri paylaşıyorum."
+readingTime: 7
+cover: "prompt-templates"
+---
+
+Her seferinde sıfırdan prompt yazmak yerine işe yarayan kalıpları şablon olarak saklamak hem hız hem de tutarlılık kazandırır. Aşağıdaki şablonlardaki köşeli parantezli alanları kendi içeriğinle doldur.
+
+## Özetleme
+
+```text
+Aşağıdaki metni [okuyucu kitlesi] için, en fazla [N] cümleyle özetle.
+Önce ana fikri, sonra en önemli üç noktayı ver.
+
+Metin:
+[metin]
+```
+
+## Kod inceleme
+
+```text
+Aşağıdaki [dil] kodunu incele. Şunlara bak:
+- Hatalar ve uç durumlar
+- Okunabilirlik
+- Performans
+
+Bulgularını önem sırasına göre madde madde yaz ve her biri için kısa bir düzeltme öner.
+
+Kod:
+[kod]
+```
+
+## Bilgi çıkarma
+
+```text
+Aşağıdaki metinden [alan listesi] bilgilerini çıkar ve JSON olarak döndür.
+Bulamadığın alanları null yaz, tahmin etme.
+
+Metin:
+[metin]
+```
+
+## Yeniden yazma
+
+```text
+Aşağıdaki metni [ton: ör. resmi, samimi] bir tonda yeniden yaz.
+Anlamı ve verilen bilgileri değiştirme.
+
+Metin:
+[metin]
+```
+
+## Şablonları kullanırken
+
+- Alanları net doldur; belirsiz girdi, belirsiz çıktı demektir.
+- Şablonu ilk denemede mükemmel bekleme; sonucu görüp ifadeleri iyileştir.
+- İşe yarayan sürümleri bir yerde sakla ve tarihini not et.
+
+İyi prompt yazmanın temel ilkeleri için [İyi Bir Prompt Nasıl Yazılır?](/yazilar/iyi-bir-prompt-nasil-yazilir) yazısına da göz atabilirsin.

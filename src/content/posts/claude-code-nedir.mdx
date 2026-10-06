@@ -1,0 +1,99 @@
+---
+title: "Claude Code Nedir? Nasıl Kullanılır?"
+date: "2024-03-12"
+category: "claude-code"
+excerpt: "Claude Code'un ne olduğunu, temel özelliklerini, kurulumunu ve pratik örneklerini adım adım anlatıyorum."
+readingTime: 8
+cover: "claude-code"
+featured: true
+tags: ["Claude Code", "AI Tools", "Yazılım Geliştirme", "Prompt Engineering", "Productivity"]
+---
+
+## Claude Code Nedir?
+
+Claude Code, Anthropic tarafından geliştirilen Claude modellerinin terminal ortamında kullanılmasını sağlayan güçlü bir araçtır. Yazılım geliştirme süreçlerinde kod yazma, hata ayıklama, refactoring ve daha birçok konuda yardımcı olur. Doğal dil ile kod üzerinde işlem yapabilmenizi sağlayarak geliştirici deneyimini tamamen yeni bir seviyeye taşır.
+
+Sohbet penceresine kod kopyalayıp yapıştırmak yerine projenin kendi klasöründe çalışır: dosyaları okur, değişiklik önerir, komut çalıştırır ve sonucu görüp yoluna devam eder.
+
+<Figure caption="Claude Code, projenin klasöründe etkileşimli bir terminal oturumu olarak çalışır.">
+  <TerminalDemo />
+</Figure>
+
+## Neden Önemli?
+
+Geliştiriciler için zaman en değerli kaynaktır. Claude Code, tekrar eden görevleri otomatikleştirerek odaklanmanızı asıl önemli olan problemlere sağlar. Özellikle büyük kod tabanlarında hızlı navigasyon, açıklama üretme ve kod iyileştirme konularında ciddi avantajlar sunar.
+
+<FeatureGrid>
+  <Feature icon="clock" tone="blue" title="Zaman Tasarrufu">Tekrarlayan işleri otomatikleştirir.</Feature>
+  <Feature icon="trending" tone="violet" title="Daha İyi Kod">Temiz ve sürdürülebilir kod yazmanıza yardımcı olur.</Feature>
+  <Feature icon="code" tone="green" title="Doğal Dil Desteği">Karmaşık komutlar yerine doğal dille kullanabilirsiniz.</Feature>
+  <Feature icon="chat" tone="orange" title="Geniş Entegrasyon">Birçok geliştirici aracıyla uyumlu çalışır.</Feature>
+</FeatureGrid>
+
+## Temel Özellikler
+
+- **Kod tabanını anlama:** "Bu repo ne yapıyor, giriş noktası neresi?" gibi sorulara projeyi okuyarak cevap verir.
+- **Çok dosyalı değişiklikler:** Özellik ekleme ve hata düzeltmeyi birden fazla dosyada tutarlı biçimde yapar.
+- **Komut çalıştırma:** Testleri ve derleme komutlarını çalıştırıp çıktıyı okuyabilir.
+- **Git ile çalışma:** Değişiklikleri inceleyip commit mesajı önerebilir.
+- **Proje hafızası:** `CLAUDE.md` dosyasındaki kuralları her oturumda okur.
+
+## Kurulum
+
+Kurulum için her zaman resmi dokümantasyondaki güncel adımları izle. Node.js yüklüyse klasik yol şudur:
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+İlk çalıştırmada hesabınla giriş yapman istenir.
+
+## İlk Kullanım
+
+Çalışmak istediğin proje klasörüne geçip aracı başlat:
+
+```bash
+cd projem
+claude
+```
+
+Ardından ne yapmak istediğini doğal dille yaz. Başlamak için iyi ilk görevler:
+
+1. Projeyi tanımasını iste: "Bu projenin yapısını özetle."
+2. Küçük bir değişiklik iste: "README'ye kurulum adımlarını ekle."
+3. Önerilen değişikliği onaylamadan önce oku.
+
+## Pratik Örnekler
+
+Aşağıdaki istekler gerçek projelerde sık kullanılan örneklerdir:
+
+```text
+src/lib klasöründeki fonksiyonlar için eksik testleri yaz ve çalıştır.
+```
+
+```text
+Bu hata mesajının nedenini bul ve düzelt: TypeError: Cannot read properties of undefined
+```
+
+```text
+Bu bileşeni daha küçük parçalara ayır; davranışı değiştirme.
+```
+
+## İpuçları
+
+1. **Küçük ve net görevlerle başla.** "Login formuna e-posta doğrulaması ekle", "uygulamayı baştan yaz"dan çok daha iyi sonuç verir.
+2. **Bağlamı ver.** Projenin kurallarını, komutlarını ve mimarisini `CLAUDE.md` dosyasına yaz.
+3. **Değişiklikleri incele.** Önerilen diff'i onaylamadan önce oku.
+4. **İzinleri bilinçli yönet.** Dosya yazma ve komut çalıştırma izinlerini ihtiyacına göre sınırla.
+
+## Dikkat Edilmesi Gerekenler
+
+- Güvenlik açısından hassas kodları ve gizli anahtarları paylaşmadan önce düşün.
+- Üretilen kodu her zaman testlerle ve kendi gözünle doğrula; araç hızlandırır, sorumluluk sende kalır.
+- Ürün kararları ve mimari tercihler hâlâ senin gözünden geçmeli.
+
+## Sonuç
+
+Claude Code, küçük ve net görevlerle, iyi tanımlanmış proje kurallarıyla ve değişiklikleri inceleyen bir geliştiriciyle birlikte kullanıldığında günlük işleri belirgin biçimde hızlandırır.
+
+> Bu yazı bir başlangıç rehberidir; sonraki yazılarda gerçek proje örneklerine ve `CLAUDE.md` yazma yöntemlerine değineceğim.

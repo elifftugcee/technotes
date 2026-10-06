@@ -1,0 +1,49 @@
+---
+title: "YOLO Nedir ve Nasıl Çalışır?"
+date: "2024-03-08"
+category: "ai-computer-vision"
+excerpt: "Gerçek zamanlı nesne tespitinin en bilinen ailesi YOLO'nun arkasındaki fikri ve kısa bir kullanım örneğini inceliyoruz."
+readingTime: 10
+cover: "yolo"
+featured: true
+---
+
+YOLO, "You Only Look Once" (yalnızca bir kez bak) ifadesinin kısaltmasıdır. Bir görüntüdeki nesneleri tek bir ileri geçişte (forward pass) bulup sınıflandıran bir nesne tespiti (object detection) model ailesidir.
+
+## Temel fikir
+
+Eski yaklaşımlar önce "nesne olabilecek bölgeleri" önerir, sonra her bölgeyi ayrı ayrı sınıflandırırdı. YOLO ise problemi tek bir ağa yıkar: görüntüyü bir kerede işler ve doğrudan şunları tahmin eder:
+
+- Her nesnenin **sınırlayıcı kutusu** (bounding box)
+- Kutunun içinde nesne olma **güven skoru** (confidence)
+- Nesnenin **sınıfı** (araba, insan, bisiklet…)
+
+Tek aşamalı olduğu için hızlıdır; bu yüzden kamera akışı gibi gerçek zamanlı işlerde sık tercih edilir.
+
+## Çıktı nasıl temizlenir?
+
+Model aynı nesne için birden fazla, üst üste binen kutu üretebilir. Bunları ayıklamak için iki kavram kullanılır:
+
+1. **IoU** ile iki kutunun ne kadar örtüştüğü ölçülür.
+2. **NMS** ile aynı nesneye ait kutulardan yalnızca en güvenilir olan tutulur.
+
+Bu iki kavramı ayrı bir yazıda ayrıntılı anlatıyorum: [IoU ve NMS Nedir?](/yazilar/object-detection-da-iou-ve-nms-nedir)
+
+## Hızlı bir deneme
+
+Ultralytics kütüphanesiyle önceden eğitilmiş bir modeli birkaç satırda çalıştırabilirsin:
+
+```python
+from ultralytics import YOLO
+
+model = YOLO("yolov8n.pt")        # küçük, hızlı model
+results = model("sokak.jpg")      # görüntü üzerinde tahmin
+results[0].show()                 # kutuları çizilmiş sonucu göster
+```
+
+## Ne zaman kullanılır?
+
+- Hız önemliyse (video, canlı kamera, uç cihazlar)
+- Nesne sınıfları belliyse ve etiketli veriyle ince ayar (fine-tuning) yapılabiliyorsa
+
+Çok yüksek hassasiyet gereken ya da küçük nesnelerin yoğun olduğu işlerde farklı mimarilerle karşılaştırma yapmak iyi bir fikirdir.

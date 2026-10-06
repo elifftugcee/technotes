@@ -1,118 +1,161 @@
 @import "tailwindcss";
 
-@theme {
-  /* Surfaces */
-  --color-canvas: #fafbfe;
-  --color-surface: #eef2fc;
-  --color-surface-strong: #e2e8fa;
+/* Dark mode is driven by <html data-theme="dark"> (set by the inline script in layout.tsx) */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-  /* Text */
-  --color-ink: #10152b;
-  --color-muted: #4b5468;
+/* ------------------------------------------------------------------ */
+/* Design tokens — light theme is the default, dark overrides below     */
+/* ------------------------------------------------------------------ */
+:root {
+  --canvas: #f6f9ff;
+  --surface: #ffffff;
+  --surface-2: #eef3fd;
+  --ink: #0b1030;
+  --muted: #5b6579;
+  --line: rgb(18 28 80 / 0.09);
+  --brand: #0a6cff;
+  --brand-violet: #8b3cf7;
+  --glass: rgb(255 255 255 / 0.72);
 
-  /* Accents */
-  --color-accent-blue: #2563eb;
-  --color-accent-violet: #7c3aed;
-  --color-accent-turquoise: #0d9488;
-  --color-accent-indigo: #4f46e5;
+  /* Illustration palette (hero scene) */
+  --scene-sky-a: #dfe8ff;
+  --scene-sky-b: #b9c4f7;
+  --scene-wall-a: #232a85;
+  --scene-wall-b: #4a35b4;
+  --scene-desk-a: #e4def9;
+  --scene-desk-b: #b4a9ec;
 
-  /* Type */
-  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
 
-  /* Radius */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1.25rem;
+[data-theme="dark"] {
+  --canvas: #070b1f;
+  --surface: #0e1430;
+  --surface-2: #141b3d;
+  --ink: #eef1ff;
+  --muted: #9ba6c6;
+  --line: rgb(160 175 255 / 0.14);
+  --glass: rgb(14 20 48 / 0.7);
 
-  /* Shadow */
-  --shadow-soft: 0 1px 2px rgba(16, 21, 43, 0.04), 0 10px 30px -8px rgba(37, 99, 235, 0.16);
-  --shadow-soft-lg: 0 20px 45px -12px rgba(37, 99, 235, 0.22);
+  --scene-sky-a: #1b2160;
+  --scene-sky-b: #2d2a86;
+  --scene-wall-a: #0e1245;
+  --scene-wall-b: #231a6b;
+  --scene-desk-a: #3a3470;
+  --scene-desk-b: #231f55;
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-violet: var(--brand-violet);
+  --color-glass: var(--glass);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-caveat), "Segoe Script", cursive;
+
+  --shadow-card: 0 1px 2px rgb(15 23 80 / 0.05), 0 10px 28px -12px rgb(30 60 160 / 0.22);
+  --shadow-card-lg: 0 2px 4px rgb(15 23 80 / 0.06), 0 22px 40px -14px rgb(30 60 160 / 0.32);
+  --shadow-brand: 0 10px 24px -8px rgb(10 108 255 / 0.55);
+
+  --animate-scene-float: scene-float 7s ease-in-out infinite;
+  --animate-scene-glow: scene-glow 4s ease-in-out infinite;
+  --animate-twinkle: twinkle 4.5s ease-in-out infinite;
+  --animate-slide-in: slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility bg-brand-gradient {
+  background-image: linear-gradient(90deg, var(--brand) 0%, var(--brand-violet) 100%);
+}
+
+@utility text-brand-gradient {
+  background-image: linear-gradient(90deg, #1b8cff 0%, #5b6cf9 45%, #9a3df5 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* White check mark used by the custom checkboxes (articles sidebar) */
+@utility bg-check {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E");
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   body {
-    background-color: var(--color-canvas);
-    color: var(--color-ink);
-    font-family: var(--font-body);
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--color-accent-blue) 25%, transparent);
+    background-color: color-mix(in srgb, var(--brand) 25%, transparent);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent-blue);
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
-    border-radius: 2px;
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
   }
 }
 
-/* Ambient motion for the hero's decorative AI/CV composition — calm, slow, transform/opacity only */
-@keyframes hero-blob-drift-a {
+/* ------------------------------------------------------------------ */
+/* Motion — calm, transform/opacity only                                */
+/* ------------------------------------------------------------------ */
+@keyframes scene-float {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translateY(0);
   }
   50% {
-    transform: translate(16px, -12px) scale(1.08);
+    transform: translateY(-7px);
   }
 }
 
-@keyframes hero-blob-drift-b {
+@keyframes scene-glow {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-14px, 10px) scale(1.05);
-  }
-}
-
-@keyframes hero-node-pulse {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scale(1);
+    opacity: 0.75;
   }
   50% {
     opacity: 1;
-    transform: scale(1.35);
   }
 }
 
-@keyframes hero-line-breathe {
+@keyframes twinkle {
   0%,
   100% {
-    opacity: 0.18;
+    opacity: 0.25;
   }
   50% {
-    opacity: 0.45;
+    opacity: 1;
   }
 }
 
-@keyframes hero-chip-float {
-  0%,
-  100% {
-    transform: translateY(0);
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
   }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes hero-panel-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 

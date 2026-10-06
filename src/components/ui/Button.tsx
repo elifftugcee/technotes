@@ -1,46 +1,56 @@
 import Link from "next/link";
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "outline" | "ghost";
+type Variant = "primary" | "outline" | "soft" | "light";
 
 const baseClasses =
-  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-body text-sm font-semibold transition-[transform,box-shadow,background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[transform,box-shadow,background-color,border-color,filter] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:pointer-events-none disabled:opacity-60";
 
 const variantClasses: Record<Variant, string> = {
-  primary:
-    "bg-gradient-to-r from-accent-blue via-accent-violet to-accent-turquoise text-white shadow-soft hover:-translate-y-0.5 hover:shadow-soft-lg",
-  outline:
-    "border border-ink/15 bg-white text-ink hover:border-accent-blue/50 hover:bg-surface",
-  ghost: "text-ink/80 hover:bg-surface hover:text-ink",
+  primary: "bg-brand-gradient text-white shadow-brand hover:-translate-y-0.5 hover:brightness-110",
+  outline: "border border-line bg-surface text-ink shadow-card hover:-translate-y-0.5 hover:border-brand/40",
+  soft: "border border-line bg-surface text-brand shadow-card hover:-translate-y-0.5 hover:border-brand/40",
+  /** Always-white pill — for use on top of imagery in both themes */
+  light: "border border-transparent bg-white text-brand shadow-card hover:-translate-y-0.5",
 };
 
-type SharedAttributes = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement> & AnchorHTMLAttributes<HTMLAnchorElement>,
-  "className" | "children" | "href" | "type"
->;
+const sizeClasses = {
+  md: "h-10 px-5 text-sm",
+  lg: "h-12 px-8 text-sm",
+} as const;
 
-export type ButtonProps = SharedAttributes & {
+export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children"> & {
   variant?: Variant;
-  href?: string;
+  size?: keyof typeof sizeClasses;
   className?: string;
   children: ReactNode;
-  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  /** When set, renders a link (new tab for external URLs) instead of a `<button>`; button-only props are ignored. */
+  href?: string;
 };
 
-export function Button({ variant = "primary", href, className = "", children, type, ...rest }: ButtonProps) {
-  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`.trim();
+export function Button({ variant = "primary", size = "md", className, children, href, ...buttonProps }: ButtonProps) {
+  const classes = cn(baseClasses, variantClasses[variant], sizeClasses[size], className);
 
-  if (href) {
+  if (href === undefined) {
     return (
-      <Link href={href} className={classes} {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <button type="button" className={classes} {...buttonProps}>
         {children}
-      </Link>
+      </button>
+    );
+  }
+
+  if (/^https?:\/\//.test(href)) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
+        {children}
+      </a>
     );
   }
 
   return (
-    <button type={type ?? "button"} className={classes} {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <Link href={href} className={classes}>
       {children}
-    </button>
+    </Link>
   );
 }
