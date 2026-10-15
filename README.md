@@ -14,7 +14,7 @@ npm run lint
 ```
 src/
   app/                 Rotalar: /, /yazilar, /yazilar/[slug], /kategoriler, /hakkimda
-    actions/subscribe.ts   Bülten formu için Server Action
+    actions/subscribe.ts   Bülten formu için Server Action (bülten şimdilik pasif — aşağıya bakın)
   components/
     layout/            Header, Footer, Logo, SearchBox (⌘K / Ctrl K), ThemeToggle
     home/              Ana sayfa bölümleri: Hero, CategoryStrip, FeaturedCarousel, PostsShowcase, Newsletter
@@ -118,7 +118,14 @@ uygulanır. Renkler `src/app/globals.css` içindeki CSS değişkenlerinde tanım
 
 ## Bülten
 
-Form, `src/app/actions/subscribe.ts` Server Action'ını çağırır; e-postalar `src/lib/newsletter.ts` ile
-yerel `.data/subscribers.json` dosyasına yazılır (git'e girmez). Vercel gibi sunucusuz ortamlarda dosya
-sistemi yazılamaz — canlıya almadan önce `addSubscriber` içeriğini e-posta sağlayıcınıza (Buttondown,
-Resend, Mailchimp…) bağlayın.
+Abonelik formu şimdilik **pasif**: "Yakında" durumunda gösterilir (ana sayfadaki bülten bandı ve yazı kenar çubuğundaki
+kart), hiçbir şey göndermez, kaydetmez ve başarı mesajı göstermez. Arkasında henüz bir e-posta servisi yok ve Netlify
+gibi sunucusuz ortamlarda dosya sistemi yazılamaz.
+
+Açmak için:
+1. `src/lib/newsletter.ts` içindeki `addSubscriber` fonksiyonunu e-posta sağlayıcınıza (Buttondown, Resend, Mailchimp…)
+   bağlayın; API anahtarlarını yalnızca sunucu tarafı ortam değişkenlerinde tutun, repoya koymayın.
+2. `src/content/site.ts` içinde `newsletter.enabled` değerini `true` yapın.
+
+Form (`components/home/NewsletterForm.tsx`) ve Server Action (`app/actions/subscribe.ts`) doğrulama, bekleme durumu ve
+başarı/hata mesajlarını zaten yönetir; Server Action, bayrak kapalıyken ayrıca istekleri reddeder.

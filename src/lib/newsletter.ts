@@ -1,34 +1,20 @@
-import { promises as fs } from "fs";
-import path from "path";
-
 /**
- * Newsletter storage adapter.
+ * Newsletter provider seam (server only — keep API keys in server-side environment variables, never in the repo).
  *
- * Subscribers are appended to a local JSON file (`.data/subscribers.json`, git-ignored). That works
- * in `next dev` and on a self-hosted Node server. On serverless hosts (e.g. Vercel) the file system
- * is read-only — replace the body of `addSubscriber` with a call to your email provider
- * (Buttondown, Resend, Mailchimp, …). Nothing else in the app needs to change.
+ * The signup is switched off for now (`site.newsletter.enabled` in `content/site.ts`): there is no e-mail service
+ * behind it yet, and the site is hosted where the file system is read-only, so nothing is stored or pretended.
+ *
+ * To turn it on:
+ *   1. implement `addSubscriber` below with your provider (Buttondown, Resend, Mailchimp, …);
+ *   2. set `site.newsletter.enabled` to `true`.
+ * The form (`components/home/NewsletterForm.tsx`) and the Server Action (`app/actions/subscribe.ts`) already take
+ * care of validation, the pending state and the success / error messages.
  */
-const dataDir = path.join(process.cwd(), ".data");
-const subscribersFile = path.join(dataDir, "subscribers.json");
 
-type Subscriber = { email: string; subscribedAt: string };
+export type SubscribeResult = "added" | "exists";
 
-async function readSubscribers(): Promise<Subscriber[]> {
-  try {
-    return JSON.parse(await fs.readFile(subscribersFile, "utf8")) as Subscriber[];
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
-    throw error;
-  }
-}
-
-export async function addSubscriber(email: string): Promise<"added" | "exists"> {
-  const subscribers = await readSubscribers();
-  if (subscribers.some((subscriber) => subscriber.email === email)) return "exists";
-
-  subscribers.push({ email, subscribedAt: new Date().toISOString() });
-  await fs.mkdir(dataDir, { recursive: true });
-  await fs.writeFile(subscribersFile, JSON.stringify(subscribers, null, 2));
-  return "added";
+/** Adds `email` (already trimmed, lower-cased and validated) to the mailing list. */
+export async function addSubscriber(email: string): Promise<SubscribeResult> {
+  void email;
+  throw new Error("Newsletter provider is not configured: implement addSubscriber in src/lib/newsletter.ts");
 }

@@ -1,5 +1,6 @@
 "use server";
 
+import { site } from "@/content/site";
 import { addSubscriber } from "@/lib/newsletter";
 
 export type SubscribeState = {
@@ -12,6 +13,11 @@ export type SubscribeState = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export async function subscribe(_previous: SubscribeState, formData: FormData): Promise<SubscribeState> {
+  // Server Actions are public endpoints: refuse here too, not only in the UI, while the signup is switched off.
+  if (!site.newsletter.enabled) {
+    return { status: "error", message: "Bülten aboneliği henüz aktif değil." };
+  }
+
   const email = String(formData.get("email") ?? "")
     .trim()
     .toLowerCase();

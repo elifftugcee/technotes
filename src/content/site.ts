@@ -13,6 +13,12 @@ const social: { github: string } & Partial<Record<Exclude<SocialKey, "github">, 
   // email: "merhaba@alanadin.com",   // sadece adres; mailto: otomatik eklenir
 };
 
+/**
+ * Newsletter signup. Switched off until `addSubscriber` in `lib/newsletter.ts` talks to a real e-mail service:
+ * while `enabled` is false the forms show a "Yakında" (coming soon) state and nothing is submitted or stored.
+ */
+const newsletter: { enabled: boolean } = { enabled: false };
+
 export const site = {
   name: "TechNotes",
   description:
@@ -31,6 +37,7 @@ export const site = {
     { href: "/hakkimda", label: "Hakkımda" },
   ],
   social,
+  newsletter,
 } as const;
 
 export type NavItem = (typeof site.nav)[number];
